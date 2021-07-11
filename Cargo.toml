@@ -1,0 +1,11 @@
+[package]
+name = "lijowa"
+version = "0.1.0"
+authors = ["NrdyBhu1 <NrdyBhu1@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+macroquad = "0.3.7"
+
+[profile.release]
+opt-level = 3
