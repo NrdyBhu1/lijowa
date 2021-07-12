@@ -1,23 +1,36 @@
 use macroquad::prelude::*;
+mod face;
+mod player;
+use crate::player::*;
 
-fn window_conf() -> Conf {
+/// window config
+/// TODO: Add More features
+pub fn window_conf() -> Conf {
     Conf {
-        window_title: "Window Conf".to_owned(),
-        fullscreen: true,
+        window_title: "Lijowa".to_owned(),
+        // fullscreen: true,
+        window_resizable: false,
         ..Default::default()
     }
 }
 
+/// main entry point
 #[macroquad::main(window_conf)]
 async fn main() {
+    // variables
+    let smile: Texture2D = load_texture("./assets/smile.png").await.unwrap();
+    let annoyed: Texture2D = load_texture("./assets/annoyed.png").await.unwrap();
+    let angry: Texture2D = load_texture("./assets/anrgy.png").await.unwrap();
+    let confused: Texture2D = load_texture("./assets/confused.png").await.unwrap();
+    let mut player: Player = Player::new().await.unwrap();
+    let faces: [Texture2D; 4] = [smile, annoyed, angry, confused];
+
+    // main loop
     loop {
-        clear_background(WHITE);
-
-        draw_line(40.0, 40.0, 100.0, 200.0, 15.0, BLUE);
-        draw_rectangle(screen_width() / 2.0 - 60.0, 100.0, 120.0, 60.0, GREEN);
-        draw_circle(screen_width() - 30.0, screen_height() - 30.0, 15.0, YELLOW);
-
-        draw_text("IT WORKS!", 20.0, 20.0, 30.0, DARKGRAY);
+        player.update(&vec![]).unwrap();
+        clear_background(BLACK);
+        player.render(&faces).unwrap();
         next_frame().await
     }
 }
+
